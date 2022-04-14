@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://player.gd" type="Script" id=17]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
+
+[node name="Player" type="Area2D"]
+script = ExtResource( 17 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 0.934652, 0.963455 )
+shape = SubResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0.5, 0 )
+frames = SubResource( 3 )
+animation = "idle"
+
+[node name="Tween" type="Tween" parent="."]
