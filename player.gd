@@ -6,6 +6,8 @@ onready var tween = $Tween
 
 var direction = Vector2.ZERO
 
+var facing = "move_down"
+
 var actions = {
 	"move_left": 0,
 	"move_right": 0,
@@ -37,8 +39,9 @@ func action_sort(x, y):
 
 func _process(delta):
 	try_move()
-
-	$AnimatedSprite.play()
+	if not tween.is_active():
+		$AnimatedSprite.set_frame(0)	
+		$AnimatedSprite.stop()
 
 func try_move():
 	# Currently moving
@@ -54,10 +57,14 @@ func try_move():
 	if rays[dir].is_colliding():
 		return
 	
-	# Move to new tile
+	# Start move to new tile
 	var new_pos = directions[dir] * tile_size + position
 	tween.interpolate_property(self, "position", position, new_pos, 1.0/speed, Tween.TRANS_LINEAR, 0)
 	tween.start()
+	
+	# Set new facing direction
+	facing = dir
+	$AnimatedSprite.play(facing)
 
 func get_new_direction(): 
 	var inputs = actions.keys()
