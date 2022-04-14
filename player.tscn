@@ -27,3 +27,18 @@ frames = SubResource( 3 )
 animation = "idle"
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="ray_move_right" type="RayCast2D" parent="."]
+rotation = 3.14159
+cast_to = Vector2( 0, 62 )
+
+[node name="ray_move_down" type="RayCast2D" parent="."]
+cast_to = Vector2( 0, 62 )
+
+[node name="ray_move_left" type="RayCast2D" parent="."]
+rotation = 1.5708
+cast_to = Vector2( 0, 62 )
+
+[node name="ray_move_up" type="RayCast2D" parent="."]
+rotation = 4.71239
+cast_to = Vector2( 0, 62 )
