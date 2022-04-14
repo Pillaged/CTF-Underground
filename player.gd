@@ -30,6 +30,7 @@ onready var rays = {
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	position = position.snapped(Vector2.ONE * tile_size)
+	position += Vector2.ONE * tile_size/2
 
 func action_sort(x, y):
 	return actions[x] > actions[y]
