@@ -1,8 +1,10 @@
 extends StaticBody2D
+export var team = "blue"
+
 var tile_size = 64
 var flag_picked_up = false
+var score = 0
 
-export var team = "blue"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,6 +26,13 @@ func interact(player):
 		return_flag()
 		player.set_held_flag("", null)
 		
+	if player.team == team and player.held_flag != "" and player.held_flag != team :
+		player.held_flag_controller.return_flag()
+		player.set_held_flag("", null)
+		
 func return_flag():
 	flag_picked_up = false
 	$AnimatedSprite.play(team)
+
+func score():
+	score += 1
