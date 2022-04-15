@@ -123,3 +123,6 @@ cast_to = Vector2( 0, 62 )
 [node name="ray_move_up" type="RayCast2D" parent="."]
 rotation = 4.71239
 cast_to = Vector2( 0, 62 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
