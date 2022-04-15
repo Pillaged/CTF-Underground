@@ -1,49 +1,20 @@
 extends Area2D
 var tile_size = 64
+var flag_picked_up = false
 
-export var speed = 5
-export var flag_rotation_speed = PI
-export var has_team_flag = "blue"
+export var team = "blue"
 
-onready var tween = $Tween
-
-var direction = Vector2.ZERO
-
-var facing = "move_down"
-
-var actions = {
-	"move_left": 0,
-	"move_right": 0,
-	"move_up": 0,
-	"move_down": 0,
-}
-
-var directions = {
-	"move_left": Vector2.LEFT,
-	"move_right":  Vector2.RIGHT,
-	"move_up":  Vector2.UP,
-	"move_down":  Vector2.DOWN,
-}
-
-onready var rays = {
-	"move_left": $ray_move_left,
-	"move_right":  $ray_move_right,
-	"move_up":  $ray_move_up,
-	"move_down":  $ray_move_down,
-}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	position = position.snapped(Vector2.ONE * tile_size)
 	position += Vector2.ONE * tile_size/2
-	set_flag_visible(has_team_flag != "")
 
 func action_sort(x, y):
 	return actions[x] > actions[y]
 
 func _process(delta):
 	try_move()
-	rotate_flag(delta)
 	if not tween.is_active():
 		$AnimatedSprite.set_frame(0)	
 		$AnimatedSprite.stop()
@@ -70,10 +41,6 @@ func try_move():
 	# Set new facing direction
 	facing = dir
 	$AnimatedSprite.play(facing)
-	
-func rotate_flag(delta):
-	$Pivot.rotation += flag_rotation_speed * delta
-
 
 func get_new_direction(): 
 	var inputs = actions.keys()
@@ -89,6 +56,4 @@ func _unhandled_input(event):
 		if event.is_action_pressed(dir):
 			actions[dir] = OS.get_ticks_msec()
 
-func set_flag_visible(val):
-	$Pivot/Flag.visible = val
 	
