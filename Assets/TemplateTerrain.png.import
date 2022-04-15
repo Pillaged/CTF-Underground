@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Collisionmap-export.png-a026d9f1408d17c5527989eac5bdd332.stex"
+path="res://.import/TemplateTerrain.png-4050547c495b73834745e77a73938aa3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Collisionmap-export.png"
-dest_files=[ "res://.import/Collisionmap-export.png-a026d9f1408d17c5527989eac5bdd332.stex" ]
+source_file="res://Assets/TemplateTerrain.png"
+dest_files=[ "res://.import/TemplateTerrain.png-4050547c495b73834745e77a73938aa3.stex" ]
 
 [params]
 
