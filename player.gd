@@ -1,16 +1,15 @@
 extends Area2D
 var tile_size = 64
 
+export var team = "blue"
 export var speed = 5
 export var flag_rotation_speed = PI
-export var held_flag = ""
 
 onready var tween = $Tween
 onready var animatedSprite = $AnimatedSprite
 
+var held_flag = ""
 var held_flag_controller = null
-var direction = Vector2.ZERO
-
 var facing = "move_down"
 
 var actions = {

@@ -14,10 +14,16 @@ func _process(delta):
 	pass
 
 func interact(player):
-	if not flag_picked_up and player.can_pickup_flag():
+	if not flag_picked_up and player.team != team and player.can_pickup_flag():
 		flag_picked_up = true
 		player.set_held_flag(team, self)
-	
+		$AnimatedSprite.play("empty")
+		return
+		
+	if flag_picked_up and player.held_flag == team:
+		return_flag()
+		player.set_held_flag("", null)
+		
 func return_flag():
 	flag_picked_up = false
 	$AnimatedSprite.play(team)
