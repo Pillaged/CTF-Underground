@@ -1,13 +1,26 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://base_enemy.png" type="Texture" id=2]
-[ext_resource path="res://flag_blue.png" type="Texture" id=3]
-[ext_resource path="res://flag_red.png" type="Texture" id=4]
 [ext_resource path="res://player.gd" type="Script" id=17]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=7]
 flags = 4
@@ -54,26 +67,16 @@ flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 64, 32, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=4]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=5]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 32, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=6]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 64, 0, 32, 32 )
-
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
 "name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"loop": true,
+"name": "move_up",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
@@ -90,32 +93,9 @@ animations = [ {
 "loop": true,
 "name": "move_left",
 "speed": 5.0
-}, {
-"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
-"loop": true,
-"name": "move_up",
-"speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=16]
-animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "blue",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "red",
-"speed": 5.0
-} ]
-
-[node name="Player" type="Area2D"]
+[node name="FlagController" type="Area2D"]
 script = ExtResource( 17 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -150,12 +130,3 @@ cast_to = Vector2( 0, 62 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-
-[node name="Pivot" type="Node2D" parent="."]
-position = Vector2( 0, -11 )
-rotation = -0.764454
-
-[node name="Flag" type="AnimatedSprite" parent="Pivot"]
-position = Vector2( 25, 0 )
-frames = SubResource( 16 )
-animation = "red"
