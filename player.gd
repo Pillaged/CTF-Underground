@@ -6,6 +6,7 @@ export var flag_rotation_speed = PI
 export var has_team_flag = "blue"
 
 onready var tween = $Tween
+onready var animatedSprite = $AnimatedSprite
 
 var direction = Vector2.ZERO
 
@@ -42,34 +43,43 @@ func action_sort(x, y):
 	return actions[x] > actions[y]
 
 func _process(delta):
-	try_move()
-	rotate_flag(delta)
-	if not tween.is_active():
-		$AnimatedSprite.set_frame(0)	
-		$AnimatedSprite.stop()
-
-func try_move():
 	# Currently moving
-	if tween.is_active():
-		return
-	
+	if not tween.is_active():
+		try_move()
+			
+	rotate_flag(delta)
+
+# Tries to start a move in the direction the player is facing. Changes the 
+# direction of the player.
+# Returns true is the player if the player is moving, false otherwise. If the 
+# only change is in direction, then returns false.
+func try_move():
 	# Get input direction
 	var dir = get_new_direction()
 	if dir == null:
-		return
-	
-	# Check if new position has a wall
-	if rays[dir].is_colliding():
-		return
-	
-	# Start move to new tile
-	var new_pos = directions[dir] * tile_size + position
-	tween.interpolate_property(self, "position", position, new_pos, 1.0/speed, Tween.TRANS_LINEAR, 0)
-	tween.start()
+		return false
 	
 	# Set new facing direction
 	facing = dir
+	
+	# Check if new position has a wall
+	if rays[dir].is_colliding():
+		return false
+	
+	# Start move to new tile
+	var new_pos = directions[dir] * tile_size + position
+	tween.interpolate_callback(self, 1.0/speed, "move_callback")
+	tween.interpolate_property(self, "position", position, new_pos, 1.0/speed, Tween.TRANS_LINEAR, 0)
+	tween.start()
+	
 	$AnimatedSprite.play(facing)
+	return true
+	
+	
+func move_callback():
+	if not try_move():
+		$AnimatedSprite.stop()
+
 	
 func rotate_flag(delta):
 	$Pivot.rotation += flag_rotation_speed * delta
